@@ -6,7 +6,7 @@ use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
-| Seller Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -16,16 +16,11 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return Inertia::render('Admin/Welcome');
+})->name('admin.welcome');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return Inertia::render('Admin/Dashboard');
+})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__.'/auth-admin.php';
