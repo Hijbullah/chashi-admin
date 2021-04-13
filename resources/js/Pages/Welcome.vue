@@ -14,6 +14,14 @@
                     Register
                 </inertia-link>
             </template>
+
+            <inertia-link :href="route('seller.welcome')" class="ml-4 text-sm text-gray-700 underline">
+                Seller Zone
+            </inertia-link>
+
+            <inertia-link :href="route('admin.welcome')" class="ml-4 text-sm text-gray-700 underline">
+                Admin
+            </inertia-link>
         </div>
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
