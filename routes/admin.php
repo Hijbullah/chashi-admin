@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SupplierController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::name('admin.')->middleware(['auth:admin', 'verified'])->group(function() 
     })->name('dashboard');
 
     Route::resource('categories', CategoryController::class)->except('show');
+    Route::resource('suppliers', SupplierController::class);
+    Route::resource('products', ProductController::class);
 });
 
 

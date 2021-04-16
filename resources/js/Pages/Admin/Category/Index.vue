@@ -5,12 +5,9 @@
 
             <div class="mt-5">
                 <div class="mb-6 flex justify-end items-center">
-                    <inertia-link 
-                        :href="route('admin.categories.create')" 
-                        class="btn-primary"
-                    >
+                    <app-primary-link :href="route('admin.categories.create')">
                         Create
-                    </inertia-link>
+                    </app-primary-link>
                 </div>
 
                 <div class="bg-white rounded shadow overflow-x-auto">
@@ -39,11 +36,13 @@
 <script>
     import AdminAuthenticatedLayout from '@/Layouts/Admin/Authenticated'   
     import CategoryTableChild from './CategoryTableChild' 
+    import AppPrimaryLink from '@/Components/Link/PrimaryLink'
 
     export default {
         components: {
             AdminAuthenticatedLayout,
-            CategoryTableChild
+            CategoryTableChild,
+            AppPrimaryLink
         },
 
         props: {

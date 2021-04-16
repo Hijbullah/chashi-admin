@@ -15,12 +15,6 @@
                             <app-select id="parent" class="mt-2 block w-full" v-model="form.parent">
                                 <option :value="null">Select a Category</option>
                                 <CategorySelectChild v-for="category in categories" :key="category.id"  :category="category" />
-                                <!-- <option v-for="category in categories" 
-                                    :key="category.id" 
-                                    :value="category.id"
-                                >
-                                    {{ category.name }}
-                                </option> -->
                             </app-select>
                             <app-input-error :message="form.errors.parent" class="mt-2" />
                         </div>
