@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Supplier;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Supplier;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class SupplierController extends Controller
 {
@@ -16,7 +18,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Supplier/Index', [
+            'suppliers' => Supplier::select('id', 'name', 'slug')->get()
+        ]);
     }
 
     /**
@@ -37,7 +41,19 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:250', 'unique:suppliers'],
+            'details' => ['nullable', 'string']
+        ]);
+
+        $data['slug'] = Str::of($request->name)->limit(100)->slug();
+        
+        Supplier::create($data);
+
+        session()->flash('flash.message', 'Supplier created Successfully');
+        session()->flash('flash.messageStyle', 'success');
+
+        return redirect()->route('admin.suppliers.index');
     }
 
     /**
@@ -59,7 +75,9 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        return Inertia::render('Admin/Supplier/Edit', [
+            'supplier' => $supplier->only('id', 'slug', 'name', 'details')
+        ]);
     }
 
     /**
@@ -71,7 +89,25 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:250', Rule::unique('suppliers')->ignore($supplier->id)],
+            'details' => ['nullable', 'string']
+        ]);
+        
+        $supplier->name = $request->name;
+        $supplier->details = $request->details;
+
+        if($supplier->isDirty('name'))
+        {
+            $supplier->slug = Str::of($request->name)->limit(100)->slug();
+        }
+
+        $supplier->save();
+
+        session()->flash('flash.message', 'Supplier Updated Successfully');
+        session()->flash('flash.messageStyle', 'success');
+
+        return redirect()->route('admin.suppliers.index');
     }
 
     /**
@@ -82,6 +118,11 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+        
+        session()->flash('flash.message', 'Supplier deleted Successfully');
+        session()->flash('flash.messageStyle', 'success');
+
+        return back();
     }
 }

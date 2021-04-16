@@ -3,7 +3,7 @@
         <div>
             <h2 class="text-xl text-gray-900 font-semibold border-gray-900 uppercase tracking-wider">Add New Supplier</h2>
             <div class="mt-5">
-                <form @submit.prevent="submit">
+                <form @submit.prevent="update">
                     <div>
                         <app-label for="name" value="Supplier Name" />
                         <app-input ref="name" id="name" type="text" class="mt-2 block w-full" v-model="form.name" placeholder="Name..." autofocus autocomplete="name" />
@@ -23,7 +23,7 @@
 
                     <div class="mt-5">
                         <app-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Save
+                            Update
                         </app-button>
 
                         <app-secondary-link 
@@ -59,19 +59,21 @@
             AppSecondaryLink
         },
 
-        setup() {
+        props: ['supplier'],
+
+        setup(props) {
             const form = useForm({
-                name: '',
-                details: '',
+                name: props.supplier.name,
+                details: props.supplier.details,
             })
 
-            function submit() {
-                form.post(route('admin.suppliers.store'), {
+            function update() {
+                form.put(route('admin.suppliers.update', props.supplier.slug), {
                     preserveScroll: true
                 })
             }
 
-            return { form, submit }
+            return { form, update }
         }
     }
 </script>

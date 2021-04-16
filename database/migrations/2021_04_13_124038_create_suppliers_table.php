@@ -15,6 +15,9 @@ class CreateSuppliersTable extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->text('details')->nullable();
             $table->timestamps();
         });
     }
