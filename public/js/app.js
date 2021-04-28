@@ -17778,6 +17778,10 @@ __webpack_require__.r(__webpack_exports__);
     BreezeLabel: _Components_Label__WEBPACK_IMPORTED_MODULE_3__.default,
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_4__.default
   },
+  props: {
+    auth: Object,
+    errors: Object
+  },
   data: function data() {
     return {
       form: this.$inertia.form({
@@ -17830,6 +17834,8 @@ __webpack_require__.r(__webpack_exports__);
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_4__.default
   },
   props: {
+    auth: Object,
+    errors: Object,
     status: String
   },
   data: function data() {
@@ -17949,6 +17955,10 @@ __webpack_require__.r(__webpack_exports__);
     BreezeLabel: _Components_Label__WEBPACK_IMPORTED_MODULE_3__.default,
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_4__.default
   },
+  props: {
+    auth: Object,
+    errors: Object
+  },
   data: function data() {
     return {
       form: this.$inertia.form({
@@ -18005,7 +18015,9 @@ __webpack_require__.r(__webpack_exports__);
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_4__.default
   },
   props: {
+    auth: Object,
     email: String,
+    errors: Object,
     token: String
   },
   data: function data() {
@@ -18054,6 +18066,8 @@ __webpack_require__.r(__webpack_exports__);
     BreezeButton: _Components_Button__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
+    auth: Object,
+    errors: Object,
     status: String
   },
   data: function data() {
@@ -18091,6 +18105,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     BreezeAuthenticatedLayout: _Layouts_Authenticated__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  props: {
+    auth: Object,
+    errors: Object
   }
 });
 
@@ -18279,8 +18297,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    auth: Object,
     canLogin: Boolean,
     canRegister: Boolean,
+    errors: Object,
     laravelVersion: String,
     phpVersion: String
   }
