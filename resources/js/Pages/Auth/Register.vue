@@ -54,6 +54,7 @@
         props: {
             auth: Object,
             errors: Object,
+            flash: Array
         },
 
         data() {

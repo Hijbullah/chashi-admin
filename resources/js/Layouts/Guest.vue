@@ -18,6 +18,6 @@
     export default {
         components: {
             BreezeApplicationLogo,
-        }
+        },
     }
 </script>
