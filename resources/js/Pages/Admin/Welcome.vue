@@ -10,6 +10,10 @@
                     Log in
                 </inertia-link>
             </template>
+
+            <inertia-link href="/" class="ml-2 text-sm text-gray-700 underline">
+                Back To Home
+            </inertia-link>
         </div>
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -87,10 +91,10 @@
 <script>
     export default {
         props: {
+            auth: Object,
             canLogin: Boolean,
             canRegister: Boolean,
-            laravelVersion: String,
-            phpVersion: String,
+            errors: Object,
         }
     }
 </script>

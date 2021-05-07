@@ -15,38 +15,35 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('category_id')
                     ->constrained()
                     ->onDelete('cascade');
         
-            $table->enum('type', ['simple', 'variable']);
-
+            $table->enum('type', ['simple', 'variable'])->default('simple');
+            $table->boolean('pre_order')->default(false);
 
             $table->string('name');
             $table->string('slug', 100)->unique();
 
-            $table->text('excerpt');
+            $table->json('bullet_points')->nullable();
             $table->longText('description')->nullable();
 
             $table->string('unit');
             $table->unsignedInteger('quantity')->nullable();
 
-            $table->float('price', 8, 2)->nullable();
-            $table->float('discount', 8, 1)->nullable();
+            $table->float('standard_price', 8, 2)->nullable();
+            $table->float('offer_price', 8, 1)->nullable();
 
             $table->boolean('is_popular')->default(false);
-            $table->boolean('is_featured')->default(false);
             $table->boolean('is_flash_sale')->default(false);
             $table->boolean('is_spacial')->default(false);
            
-
-            $table->json('variations')->nullable();
 
             $table->string('meta_title')->nullable();
             $table->json('meta_keywords')->nullable();
             $table->text('meta_description')->nullable();
 
-            $table->enum('stock_status', ['in_stock', 'low', 'out_of_stock']);
             $table->boolean('status')->default(false);
 
             $table->timestamps();
