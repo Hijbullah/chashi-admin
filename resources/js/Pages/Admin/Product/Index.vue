@@ -5,7 +5,7 @@
 
             <div class="mt-5">
                 <div class="mb-6 flex justify-end items-center">
-                    <app-primary-link :href="route('admin.products.create')">
+                    <app-primary-link :href="route('admin.products.create.vital-info')">
                         Create
                     </app-primary-link>
                 </div>

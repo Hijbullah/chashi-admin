@@ -29,7 +29,19 @@ Route::name('admin.')->middleware(['auth:admin', 'verified'])->group(function() 
 
     Route::resource('categories', CategoryController::class)->except('show');
     Route::resource('suppliers', SupplierController::class);
-    Route::resource('products', ProductController::class);
+
+    //products
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('products/create/vital-info', [ProductController::class, 'showVitalInfoForm'])->name('products.create.vital-info');
+    Route::post('products/store/vital-info', [ProductController::class, 'storeVitalInfo'])->name('products.store.vital-info');
+    Route::get('products/create/images/{product}', [ProductController::class, 'showImagesForm'])->name('products.create.images');
+    Route::post('products/images/{product}', [ProductController::class, 'uploadProductImage'])->name('products.store.image');
+    Route::get('products/create/{section?}/{product?}', [ProductController::class, 'create'])->name('products.create');
+    Route::post('products/{section?}', [ProductController::class, 'store'])->name('products.store');
+    Route::get('products/{product}', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    // Route::resource('products', ProductController::class);
 });
 
 
