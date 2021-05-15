@@ -1,7 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    mode: 'jit',
+    // mode: 'jit',
     purge: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -18,11 +18,11 @@ module.exports = {
     },
 
     variants: {
-        // extend: {
-        //     opacity: ['disabled'],
-        //     backgroundColor: ['active'],
-        //     textColor: ['active']
-        // },
+        extend: {
+            opacity: ['disabled'],
+            backgroundColor: ['active'],
+            textColor: ['active']
+        },
     },
 
     plugins: [require('@tailwindcss/forms')],

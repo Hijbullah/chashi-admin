@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use Inertia\Inertia;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\Rules;
 
 class RegisteredAdminController extends Controller
 {
@@ -36,7 +37,7 @@ class RegisteredAdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
+            'password' => ['required', 'confirmed', Rules\Password::min(8)],
         ]);
 
         Auth::guard('admin')->login($user = Admin::create([
