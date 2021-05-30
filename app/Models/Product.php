@@ -13,11 +13,11 @@ class Product extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $casts = [
-        'bullet_points' => 'array',
         'pre_order' => 'boolean',
         'is_popular' => 'boolean',
         'is_flash_sale' => 'boolean',
-        'is_spacial' => 'boolean'
+        'is_spacial' => 'boolean',
+        'status' => 'boolean',
     ];
 
     public function getRouteKeyName()

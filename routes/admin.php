@@ -32,16 +32,22 @@ Route::name('admin.')->middleware(['auth:admin', 'verified'])->group(function() 
 
     //products
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('products/create/vital-info', [ProductController::class, 'showVitalInfoForm'])->name('products.create.vital-info');
-    Route::post('products/store/vital-info', [ProductController::class, 'storeVitalInfo'])->name('products.store.vital-info');
-    Route::get('products/create/images/{product}', [ProductController::class, 'showImagesForm'])->name('products.create.images');
-    Route::post('products/images/{product}', [ProductController::class, 'uploadProductImage'])->name('products.store.image');
-    Route::get('products/create/{section?}/{product?}', [ProductController::class, 'create'])->name('products.create');
-    Route::post('products/{section?}', [ProductController::class, 'store'])->name('products.store');
-    Route::get('products/{product}', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+    Route::get('products/create/vital-info', [ProductController::class, 'createVitalInfo'])->name('products.create.vital-info');
+    Route::post('products/vital-info', [ProductController::class, 'storeVitalInfo'])->name('products.store.vital-info');
+    
+    Route::get('products/{product}/vital-info', [ProductController::class, 'editVitalInfo'])->name('products.edit.vital-info');
+    Route::put('products/{product}/vital-info', [ProductController::class, 'updateVitalInfo'])->name('products.update.vital-info');
+    
+    Route::get('products/{product}/images', [ProductController::class, 'editImages'])->name('products.edit.images');
+    Route::post('products/{product}/images', [ProductController::class, 'storeImage'])->name('products.images.store');
+    Route::delete('products/{image}/images', [ProductController::class, 'destroyImage'])->name('products.images.destroy');
+    
+    Route::get('products/{product}/description', [ProductController::class, 'editDescription'])->name('products.edit.description');
+    Route::put('products/{product}/description', [ProductController::class, 'updateDescription'])->name('products.update.description');
+    
     Route::delete('products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-    // Route::resource('products', ProductController::class);
+
 });
 
 

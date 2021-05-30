@@ -26,7 +26,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug', 100)->unique();
 
-            $table->json('bullet_points')->nullable();
+            $table->text('excerpt')->nullable();
             $table->longText('description')->nullable();
 
             $table->string('unit');

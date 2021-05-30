@@ -14,7 +14,7 @@
                     <table class="w-full whitespace-no-wrap">
                         <tr class="text-left">
                             <th class="px-6 pt-4 pb-4 font-normal">Name</th>
-                            <th class="px-6 pt-4 pb-4 font-normal">Slug</th>
+                            <th class="px-6 pt-4 pb-4 font-normal text-center">Status</th>
                             <th class="px-6 pt-4 pb-4 font-normal text-center">Action</th>
                         </tr>
 
@@ -22,13 +22,13 @@
                             <td class="border-t px-6 py-2">
                                 {{ product.name }}
                             </td>
-                            <td class="border-t px-6 py-2">
-                                {{ product.slug }}
+                            <td class="border-t px-6 py-2 text-center">
+                                {{ product.status ? 'Published' : 'Draft' }}
                             </td>
                             
                             <td class="border-t px-6 py-2 text-center space-x-2">
                                 <inertia-link 
-                                    :href="route('admin.products.edit', product.slug)" 
+                                    :href="route('admin.products.edit.vital-info', product.slug)" 
                                     class="inline-flex text-gray-800 hover:text-gray-500 focus:outline-none"
                                 >
                                     <svg class="h-5 w-5 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -58,6 +58,7 @@
             auth: Object,
             canResetPassword: Boolean,
             errors: Object,
+            flash: Array,
             status: String,
         },
 

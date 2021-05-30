@@ -19,81 +19,13 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showVitalInfoForm()
+    public function createVitalInfo()
     {
         return Inertia::render('Admin/Product/Create/VitalInfo', [
             'categories' => Category::withDepth()->latest()->get()->toTree()
         ]);
     }
 
-    // public function create($section = 'vital-info')
-    // {
-    //     if($section === 'images')
-    //     {
-    //         return 'image';
-    //     }
-
-    //     if($section === 'details')
-    //     {
-    //         return 'details';
-    //     }
-
-    //     return Inertia::render('Admin/Product/Create/VitalInfo', [
-    //         'categories' => Category::withDepth()->latest()->get()->toTree()
-    //     ]);
-    // }
-
-    // public function store(Request $request, $section = 'vital-info')
-    // {
-    //     if($section === 'images')
-    //     {
-    //         return 'image';
-    //     }
-
-    //     if($section === 'details')
-    //     {
-    //         return 'details';
-    //     }
-
-    //     // $this->storeVitalInfo($request);
-    //     return redirect()->route('admin.products.create', 'images');
-
-    //     // $request->validate([
-    //     //     'category' => ['required', 'numeric'],
-    //     //     'name' => ['required', 'string', 'max:250'],
-    //     //     'unit' => ['required', 'string'],
-    //     //     'standard_price' => ['required', 'numeric'],
-    //     //     'offer_price' => ['nullable', 'numeric'],
-    //     //     'quantity' => ['nullable', 'numeric'],
-    //     //     'bullet_point_1' => ['required', 'string', 'max:200'],
-    //     //     'bullet_point_2' => ['required', 'string', 'max:200'],
-    //     //     'bullet_point_3' => ['required', 'string', 'max:200'],
-    //     //     'bullet_point_4' => ['nullable', 'string', 'max:200'],
-    //     //     'bullet_point_5' => ['nullable', 'string', 'max:200'],
-    //     //     'description' => ['nullable', 'string']
-    //     // ]);
-    
-    //     // $product = new Product;
-    //     // $product->category_id = $request->category;
-    //     // $product->name = $request->name;
-    //     // $product->slug = Str::of($request->name)->limit(100)->slug();
-    //     // $product->standard_price = $request->standard_price;
-    //     // $product->offer_price = $request->offer_price;
-    //     // $product->unit = $request->unit;
-    //     // $product->quantity = $request->quantity;
-    //     // $product->bullet_points = array_filter(array(
-    //     //     $request->bullet_point_1, 
-    //     //     $request->bullet_point_2,
-    //     //     $request->bullet_point_3,
-    //     //     $request->bullet_point_4,
-    //     //     $request->bullet_point_5,
-    //     // ));
-    //     // $product->description = $request->description;
-    //     // $product->save();
-
-    //     return redirect()->route('admin.products.index');
-
-    // }
 
     public function storeVitalInfo(Request $request)
     {
@@ -117,13 +49,48 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('admin.products.create.images', $product->slug);
+        return redirect()->route('admin.products.edit.images', $product->slug);
     }
 
-    public function showImagesForm(Product $product)
+    public function editVitalInfo(Product $product)
+    {
+        return Inertia::render('Admin/Product/Edit/VitalInfo', [
+            'categories' => Category::withDepth()->latest()->get()->toTree(),
+            'product' => $product->only('id', 'slug', 'category_id', 'name', 'standard_price', 'offer_price', 'unit', 'quantity')
+        ]);
+    }
+
+    public function updateVitalInfo(Request $request, Product $product)
+    {
+        $request->validate([
+            'category' => ['required', 'numeric'],
+            'name' => ['required', 'string', 'max:250'],
+            'unit' => ['required', 'string'],
+            'standard_price' => ['required', 'numeric'],
+            'offer_price' => ['nullable', 'numeric'],
+            'quantity' => ['nullable', 'numeric']
+        ]);
+
+        $product->category_id = $request->category;
+        $product->name = $request->name;
+
+        if($product->isDirty('name')) {
+            $product->slug = Str::of($request->name)->limit(100)->slug();
+        } 
+        $product->standard_price = $request->standard_price;
+        $product->offer_price = $request->offer_price;
+        $product->unit = $request->unit;
+        $product->quantity = $request->quantity;
+
+        $product->save();
+
+        return redirect()->route('admin.products.edit.images', $product->slug);
+    }
+
+    public function editImages(Product $product)
     {
         // return $product->getMedia();
-        return Inertia::render('Admin/Product/Create/Images', [
+        return Inertia::render('Admin/Product/Edit/Images', [
             'product' => $product->only('id', 'name', 'slug'),
             'images' => $product->getMedia()->map(function(Media $media) {
                 return [
@@ -134,7 +101,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function uploadProductImage(Request $request, Product $product)
+    public function storeImage(Request $request, Product $product)
     {
         $request->validate([
             'photo' => ['required', 'image', 'max:2048']
@@ -145,22 +112,32 @@ class ProductController extends Controller
         return back();
     }
 
-    public function show(Product $product)
+    public function destroyImage($imageId)
     {
-        //
+        Media::find($imageId)->delete();
+        return back();
     }
 
-    public function edit(Product $product)
+    public function editDescription(Product $product)
     {
-        return Inertia::render('Admin/Product/Edit', [
-            'categories' => Category::withDepth()->latest()->get()->toTree(),
-            'product' => $product->only('id', 'category_id', 'slug', 'name', 'standard_price', 'offer_price', 'unit', 'quantity', 'bullet_points', 'description')
+        return Inertia::render('Admin/Product/Edit/Description', [
+            'product' => $product->only('id', 'slug', 'name', 'excerpt', 'description')
         ]);
     }
 
-    public function update(Request $request, Product $product)
+    public function updateDescription(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'excerpt' => ['required', 'string', 'max:500'],
+            'description' => ['nullable', 'string']
+        ]);
+
+        $product->excerpt = $request->excerpt;
+        $product->description = $request->description;
+        $product->status = true;
+        $product->save();
+
+        return redirect()->route('admin.products.index');
     }
 
     public function destroy(Product $product)
